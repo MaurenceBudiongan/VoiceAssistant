@@ -8,38 +8,38 @@ import time
 import pygame
 import threading
 
-# Initialize text-to-speech engine
-engine = pyttsx3.init()
-engine.setProperty("rate", 160)  # speed of speech
-engine.setProperty("volume", 1.0)  # volume 0.0 - 1.0
 
-# Initialize pygame for audio playback
+engine = pyttsx3.init()
+engine.setProperty("rate", 160) 
+engine.setProperty("volume", 1.0) 
+
+
 pygame.mixer.init()
 
-# Complete lyrics for "Multo" by Cup of Joe with timestamps (in seconds)
+
 multo_lyrics = [
     (23, "Humingang malalim, pumikit na muna"),
-    (27, "At baka-sakaling namamalikmata lang"),
-    (33, "Ba't nababahala? 'Di ba't ako'y mag-isa?"),
-    (38, "'Kala ko'y payapa, boses mo'y tumatawag pa"),
-    (43, "Binaon naman na ang lahat"),
-    (48, "Tinakpan naman na 'king sugat"),
-    (53, "Ngunit ba't ba andito pa rin?"),
-    (58, "Hirap na 'kong intindihin"),
-    (63, "Tanging panalangin, lubayan na sana"),
-    (68, "Dahil sa bawat tingin, mukha mo'y nakikita"),
-    (73, "Kahit sa'n man mapunta ay anino mo'y kumakapit sa 'king kamay"),
-    (78, "Ako ay dahan-dahang nililibing nang buhay pa"),
-    (83, "Hindi na makalaya"),
-    (88, "Dinadalaw mo 'ko bawat gabi"),
-    (93, "Wala mang nakikita"),
-    (98, "Haplos mo'y ramdam pa rin sa dilim"),
-    (103, "Hindi na nananaginip"),
-    (108, "Hindi na ma-makagising"),
-    (113, "Pasindi na ng ilaw"),
-    (118, "Minumulto na 'ko ng damdamin ko"),
-    (123, "Ng damdamin ko"),
-    (128, "Hindi mo ba ako lilisanin?"),
+    (32, "At baka-sakaling namamalikmata lang"),
+    (42, "Ba't nababahala? 'Di ba't ako'y mag-isa?"),
+    (50, "'Kala ko'y payapa, boses mo'y tumatawag pa"),
+    (61, "Binaon naman na ang lahat"),
+    (65, "Tinakpan naman na 'king sugat"),
+    (69, "Ngunit ba't ba andito pa rin?"),
+    (74, "Hirap na 'kong intindihin"),
+    (78, "Tanging panalangin, lubayan na sana"),
+    (87 , "Dahil sa bawat tingin, mukha mo'y nakikita"),
+    (97 , "Kahit sa'n man mapunta ay anino mo'y kumakapit sa 'king kamay"),
+    (106 , "Ako ay dahan-dahang nililibing nang buhay pa"),
+    (115 , "Hindi na makalaya"),
+    (120 , "Dinadalaw mo 'ko bawat gabi"),
+    (124, "Wala mang nakikita"),
+    (129, "Haplos mo'y ramdam pa rin sa dilim"),
+    (133 , "Hindi na nananaginip"),
+    (138, "Hindi na ma-makagising"),
+    (143 , "Pasindi na ng ilaw"),
+    (147, "Minumulto na 'ko ng damdamin ko"),
+    (151, "Ng damdamin ko"),
+    (165, "Hindi mo ba ako lilisanin?"),
     (133, "Hindi pa ba sapat pagpapahirap sa 'kin?"),
     (138, "Hindi na ba ma-mamamayapa?"),
     (143, "Hindi na ba ma-mamamayapa?"),
@@ -65,10 +65,10 @@ def speak(text):
 def listen():
     r = sr.Recognizer()
     
-    # Check if PyAudio is available
+
     try:
         with sr.Microphone() as source:
-            print("🎤 Listening...")
+            print("Aray koo...")
             r.adjust_for_ambient_noise(source)
             audio = r.listen(source)
     except AttributeError:
@@ -93,38 +93,38 @@ def listen():
 def display_lyrics(music_path):
     """Display lyrics synchronized with the music"""
     try:
-        # Load and play the music
+
         pygame.mixer.music.load(music_path)
         pygame.mixer.music.play()
         
         start_time = time.time()
         current_lyric_index = 0
         
-        # Clear screen and display initial message
+
         os.system('cls' if os.name == 'nt' else 'clear')
-        print("\n🎵 Now playing: Multo by Cup of Joe")
+        print("\n🎵 You can now relapse: Multo by Cup of Joe")
         print("=" * 60)
         print("\n♪ Instrumental intro ♪\n")
         print("Lyrics will start in 23 seconds...")
         
-        # Wait for 23 seconds before starting lyrics
+
         time.sleep(23)
         
-        # Display lyrics as the song plays
+
         while pygame.mixer.music.get_busy() or current_lyric_index < len(multo_lyrics):
             elapsed_time = time.time() - start_time
             
-            # Check if it's time to show the next lyric
+
             if (current_lyric_index < len(multo_lyrics) and 
                 elapsed_time >= multo_lyrics[current_lyric_index][0]):
-                # Clear screen and display new lyric
+      
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print("\n🎵 Now playing: Multo by Cup of Joe")
                 print("=" * 60)
                 print(f"\n{multo_lyrics[current_lyric_index][1]}\n")
                 current_lyric_index += 1
             
-            time.sleep(0.1)  # Small delay to prevent high CPU usage
+            time.sleep(0.1) 
             
     except Exception as e:
         print(f"Error playing music: {e}")
@@ -135,7 +135,7 @@ def play_music():
     music_path = "C:/Users/II/Desktop/voice/Cup_of_Joe_-_Multo_(mp3.pm).mp3"
     
     if os.path.exists(music_path):
-        # Start lyrics display in a separate thread
+     
         lyrics_thread = threading.Thread(target=display_lyrics, args=(music_path,))
         lyrics_thread.daemon = True
         lyrics_thread.start()
@@ -148,7 +148,7 @@ def play_music():
 def main():
     speak("Hello! How can I help you?")
      
-    # Check if microphone is available
+
     try:
         sr.Microphone()
         print("Microphone is ready!")
